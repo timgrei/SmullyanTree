@@ -37,8 +37,14 @@ canvas.width = document.body.clientWidth*0.75
 canvas.height = 50
 
 btnOK.addEventListener("click", () => {
+    let hypo = input.value
+    hypo = hypo.replaceAll(/->/g, "→")
+    hypo = hypo.replaceAll(/[&^]/g, "∧")
+    hypo = hypo.replaceAll(/[|v]/g, "∨")
+    hypo = hypo.replaceAll(/~/g, "¬")
+
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    requestAnimationFrame(()=>{prove(input.value)})
+    requestAnimationFrame(()=>{prove(hypo)})
 })
 
 function prove (hypothesis) {
