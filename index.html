@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts.css">
+    <title>Baumkalkül</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 3em;
+            font-family: 'Computer Modern Serif';
+            text-align: center;
+            min-height: calc(100vh - 7em);
+            margin: 0;
+            padding: 0;
+            padding-bottom: 7em;
+            position: relative;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin: 0;
+        }
+
+        h2 {
+            margin-top: 1.5em;
+        }
+
+        .input {
+            display: flex;
+            flex-direction: row;            
+            gap: 1em;
+        }
+
+        #hypothesis {
+            width: 300px;
+            flex-grow: 1;
+        }
+
+        .result {
+            margin: 1.5em 0 2.5em;
+            font-size: 1.3em;
+            color: crimson;
+        }
+        .result:empty {
+            margin: 0;
+        }
+        
+        footer {
+            bottom: 0;
+            text-align: center;
+            margin-top: 2em;
+        }
+
+        .examples{
+            margin: 3em 0 2em;
+            padding: 1em;
+            font-size: 0.8em;
+            background: #313131;
+            width: 25em;
+            outline: 4px solid #313131;
+            border: 2px solid #f6f5f4;            
+            color: #f6f5f4;
+        }
+
+        .examples h3 {
+            margin: 0 0 0.5em 0;
+            color: #f6f5f4;
+        }
+
+        h4 {
+            margin: 0;
+        }
+
+        .examples button {            
+            border: none;            
+            background-color: #313131; 
+            border: 2px solid #f6f5f4;
+            color: #f6f5f4;
+            transition: 0.1s;
+            margin: 0.5em;
+        }
+
+        .examples button:hover {
+            background: #f6f5f4;
+            color: #313131;
+        }
+
+        button {
+            font-size: 0.9em;
+            font-family: "Computer Modern Sans";
+            padding: .5em .8em .3em;
+            cursor: pointer;
+            font-weight: bolder;
+        }
+
+        input {
+            border-radius: 0;
+            border: none;
+            background: transparent;
+            border-bottom: 2px solid #313131;
+            font-size: 1em;
+            outline: none;
+            font-family: "Computer Modern Sans";
+        }
+
+        .input button {
+            background-color: transparent; 
+            border: 2px solid #313131;
+            color: #313131;
+        }
+        .input button:hover {
+            color: #f6f5f4;
+            background: #313131;            
+        }
+
+        canvas {
+            margin-top: 2em;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: .8em 0 .5em;
+            border-top: 2px solid #f6f5f4;
+            outline: 4px solid #313131;
+            color: #f6f5f4;
+            background-color: #313131;
+            box-sizing: border-box;
+            height: 4em;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <h2>Beweis von aussagenlogischen Formeln im</h2>
+    <h1>Baumkalkül nach Smullyan</h1>
+
+    <div class="examples">
+        <h3>Beispiele</h3>
+        <button id="mp" title="((p→q)∧p)→q">Modus Ponens</button>
+        <button id="mt" title="((p→q)∧¬q)→¬p">Modus Tollens</button>
+        <button id="tautk" title="p∨¬p">p∨¬p</button>
+        <button id="transimp" title="((p→q)∧(q→r))→(p→r)">Kettenschluss</button>
+        <button id="hinGr" title="((p→r)∧(q→r))→((p∨q)→r)">Zureichender Grund</button>
+        <button id="satzWid" title="¬(p∧¬p)">Satz vom Widerspruch</button>
+    </div>
+
+    <div class="input">
+        <input type="text" id="hypothesis" placeholder="Ausdruck (ohne Vorzeichen)">
+        <button>OK</button>
+    </div>
+
+    <canvas class="smullyantree"></canvas>
+
+    <div class="result"></div>
+
+    <div class="note">
+        Bei mehr als einem Operator Klammern benutzen.<br>
+        Reservierte Zeichen: F, T, (, ), →, ∧, ∨, ¬
+    </div>
+
+    <footer>
+        © Tim Greinert, 2022 <br>
+        vgl. Raymond Smullyan: <i>First-Order Logic</i>
+    </footer>
+
+    <script src="drawTree.js"></script>
+    <script src="./script2.js"></script>
+    <script src="dom.js"></script>
+
+</body>
+</html>
